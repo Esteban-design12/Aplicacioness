@@ -59,8 +59,8 @@ aca se actualizara cuando tengamos todo mejor estipualdo
 | Nombre | Rol | 
 |-----|-----------|
 | Jose Alejandro Vargas Martinez | Lider | 
-| Efrain Esteban Murcia Robayo | Desarrolladro | 
+| Efrain Esteban Murcia Robayo | Desarrollador | 
 | Juan David Silva Cardenas | Modelador II | 
-| Jonathan Bonilla | Diseñador UX/UI | 
-| Jonathan Andrew Garcia | Tester y Documentador | 
-| Jesus Andres Perea | Modelador | 
+| Jonathan Alejandro Bonilla Gomez | Diseñador UX/UI | 
+| Jonathan Andrew Garcia Cardenas | Tester y Documentador | 
+| Jesus Andres Perea Contreras | Modelador | 
