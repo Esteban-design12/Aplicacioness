@@ -119,6 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+<<<<<<< Updated upstream
 --- !u!1 &12033557
 GameObject:
   m_ObjectHideFlags: 0
@@ -774,6 +775,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+=======
+>>>>>>> Stashed changes
 --- !u!1 &109323701
 GameObject:
   m_ObjectHideFlags: 0
@@ -7380,6 +7383,7 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 109323705}
   - {fileID: 1809680348}
+<<<<<<< Updated upstream
   - {fileID: 512976569}
   - {fileID: 103412880}
   - {fileID: 49420160}
@@ -7401,3 +7405,7 @@ SceneRoots:
   - {fileID: 1185810772}
   - {fileID: 2037952481}
   - {fileID: 994285844}
+=======
+  - {fileID: 1244763272}
+  - {fileID: 927774800}
+>>>>>>> Stashed changes
