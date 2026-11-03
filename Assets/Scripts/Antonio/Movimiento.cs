@@ -1,22 +1,24 @@
 using UnityEngine;
 
 public class Movimiento : MonoBehaviour
-
 {
-
     public float speed = 1.0f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private Animator animator;
+
     void Start()
     {
-
+        animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        transform.Translate(new Vector3(horizontal, 0.0f, vertical) * Time.deltaTime * speed);
+        Vector3 direccion = new Vector3(horizontal, 0.0f, vertical);
+        transform.Translate(direccion * Time.deltaTime * speed);
+
+        // Le dice al Animator qué tan rápido te mueves
+        animator.SetFloat("Speed", direccion.magnitude);
     }
 }
