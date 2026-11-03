@@ -28,7 +28,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -36,35 +36,6 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations:
-    - serializedVersion: 16
-      name: Crouch (1)
-      takeName: Crouch
-      internalID: 1827226128182048838
-      firstFrame: 205
-      lastFrame: 229
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Idle
       takeName: Idle
@@ -208,7 +179,157 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: Antonio_Unity(Clone)
+      parentName: 
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_LOWPOLY
+      parentName: Antonio_Unity(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_LP_Cabeza
+      parentName: Antonio_LOWPOLY
+      position: {x: -0, y: 0.81, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_CabezaLP_001
+      parentName: Antonio_LP_Cabeza
+      position: {x: -0, y: -0.81, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_LP_Cabello
+      parentName: Antonio_LOWPOLY
+      position: {x: -0, y: 0.81, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_CabelloLP_001
+      parentName: Antonio_LP_Cabello
+      position: {x: -5.2443817e-18, y: -0.81, z: -4.440892e-18}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_LP_Torso
+      parentName: Antonio_LOWPOLY
+      position: {x: -0, y: 0.53999996, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_TorsoLP_001
+      parentName: Antonio_LP_Torso
+      position: {x: -0, y: -0.53999996, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_LP_Mano_D
+      parentName: Antonio_LOWPOLY
+      position: {x: 0.48999998, y: 0.505, z: 0.035}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_ManoDLP_001
+      parentName: Antonio_LP_Mano_D
+      position: {x: -0.48999998, y: -0.505, z: -0.035}
+      rotation: {x: 0, y: 0, z: 0.57357645, w: 0.81915206}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_LP_Mano_I
+      parentName: Antonio_LOWPOLY
+      position: {x: -0.48999998, y: 0.505, z: 0.035}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_ManoILP_001
+      parentName: Antonio_LP_Mano_I
+      position: {x: 0.48999998, y: -0.505, z: -0.035}
+      rotation: {x: 0, y: -0, z: -0.57357645, w: 0.81915206}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_LP_Pie_D
+      parentName: Antonio_LOWPOLY
+      position: {x: 0.19299999, y: 0.08, z: 0.03}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_ZapatoDLP_001
+      parentName: Antonio_LP_Pie_D
+      position: {x: -4.00765, y: 12.050755, z: -1.2099831}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 20.53113, y: 20.53113, z: 20.53113}
+    - name: Antonio_LP_Pie_I
+      parentName: Antonio_LOWPOLY
+      position: {x: -0.19299999, y: 0.08, z: 0.03}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_ZapatoILP_001
+      parentName: Antonio_LP_Pie_I
+      position: {x: 4.00765, y: 12.050755, z: -1.2099831}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 20.53113, y: 20.53113, z: 20.53113}
+    - name: Antonio_Root_JNT
+      parentName: Antonio_Unity(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_Pelvis_JNT
+      parentName: Antonio_Root_JNT
+      position: {x: -0, y: 0.39999998, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_Spine_JNT
+      parentName: Antonio_Pelvis_JNT
+      position: {x: -0, y: 0.16, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_Chest_JNT
+      parentName: Antonio_Spine_JNT
+      position: {x: -0, y: 0.19, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_Neck_JNT
+      parentName: Antonio_Chest_JNT
+      position: {x: -0, y: 0.044999998, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_Head_JNT
+      parentName: Antonio_Neck_JNT
+      position: {x: -0, y: 0.01, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_Hand_R_JNT
+      parentName: Antonio_Chest_JNT
+      position: {x: 0.445, y: -0.197, z: 0.036}
+      rotation: {x: -0, y: 0.29757625, z: 0.22318208, w: 0.9282447}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_Grip_R_JNT
+      parentName: Antonio_Hand_R_JNT
+      position: {x: 0.044999998, y: -0.048, z: 0.064}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_Hand_L_JNT
+      parentName: Antonio_Chest_JNT
+      position: {x: -0.445, y: -0.197, z: 0.036}
+      rotation: {x: -0, y: -0.29757625, z: -0.22318208, w: 0.9282447}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_Grip_L_JNT
+      parentName: Antonio_Hand_L_JNT
+      position: {x: -0.044999998, y: -0.048, z: 0.064}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_Foot_R_JNT
+      parentName: Antonio_Root_JNT
+      position: {x: 0.2053113, y: 0.125, z: -0.044999998}
+      rotation: {x: 0.4678966, y: 0.023394834, z: 0.009700297, w: 0.8834203}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_Toe_R_JNT
+      parentName: Antonio_Foot_R_JNT
+      position: {x: -0, y: -0.085, z: 0.205}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_Foot_L_JNT
+      parentName: Antonio_Root_JNT
+      position: {x: -0.2053113, y: 0.125, z: -0.044999998}
+      rotation: {x: 0.4678966, y: -0.023394834, z: -0.009700297, w: 0.8834203}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Antonio_Toe_L_JNT
+      parentName: Antonio_Foot_L_JNT
+      position: {x: -0, y: -0.085, z: 0.205}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
