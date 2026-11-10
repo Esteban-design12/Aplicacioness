@@ -2,23 +2,33 @@ using UnityEngine;
 
 public class Movimiento : MonoBehaviour
 {
-    public float speed = 1.0f;
+    public float speed = 3.0f;
+    public float velocidadGiro = 540f;
+
     private Animator animator;
 
     void Start()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
 
         Vector3 direccion = new Vector3(horizontal, 0.0f, vertical);
-        transform.Translate(direccion * Time.deltaTime * speed);
 
-        // Le dice al Animator qué tan rápido te mueves
-        animator.SetFloat("Speed", direccion.magnitude);
+        if (direccion.magnitude > 0.1f)
+        {
+            transform.position += direccion.normalized * speed * Time.deltaTime;
+
+            Quaternion destino = Quaternion.LookRotation(direccion);
+            transform.rotation = Quaternion.RotateTowards(
+                transform.rotation, destino, velocidadGiro * Time.deltaTime);
+        }
+
+        if (animator != null)
+            animator.SetFloat("Speed", Mathf.Clamp01(direccion.magnitude));
     }
 }
