@@ -24,6 +24,10 @@ public class InteractionSystem : MonoBehaviour
     [Tooltip("Ángulo total frente a Antonio en el que se detectan objetos. 0 = a su alrededor, sin importar hacia dónde mire.")]
     [Range(0f, 360f)] public float facingAngle = 140f;
 
+    [Header("Animación")]
+    [Tooltip("Nombre exacto del parámetro Trigger en el Animator.")]
+    public string pickupTrigger = "PickUp";
+
     [Header("UI")]
     public TMP_Text promptText;   // texto fijo: "[E] Recoger..."
     public TMP_Text messageText;  // mensajes temporales
@@ -34,12 +38,14 @@ public class InteractionSystem : MonoBehaviour
     Interactable current;
     Coroutine messageRoutine;
     string lastName = "";
+    Animator animator;
 
     Vector3 Origin => transform.position + Vector3.up * originHeight;
 
     void Awake()
     {
         Instance = this;
+        animator = GetComponentInChildren<Animator>();
         if (messageText) messageText.text = "";
     }
 
@@ -48,7 +54,13 @@ public class InteractionSystem : MonoBehaviour
         FindTarget();
 
         if (current != null && Input.GetKeyDown(interactKey))
+        {
+            // Dispara la animación de agacharse solo si el objeto lo pide
+            if (current.animacionAgacharse && animator != null)
+                animator.SetTrigger(pickupTrigger);
+
             current.Interact();
+        }
     }
 
     void FindTarget()
