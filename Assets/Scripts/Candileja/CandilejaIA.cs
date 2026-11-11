@@ -18,20 +18,71 @@ public class CandilejaIA : MonoBehaviour
     public float distanciaPatrulla = 8f;
     public float tiempoCambioDestino = 3f;
 
+    [Header("Susto")]
+    [Tooltip("Distancia al jugador a la que hace la animación Scare.")]
+    public float distanciaSusto = 1.5f;
+    [Tooltip("Segundos que se queda quieta asustando y que el jugador queda bloqueado.")]
+    public float duracionSusto = 2f;
+    [Tooltip("Segundos de espera antes de poder asustar otra vez.")]
+    public float cooldownSusto = 5f;
+
+    [Header("Animación")]
+    public string parametroVelocidad = "Speed";
+    public string triggerSusto = "Scare";
+
+    private Animator animator;
     private Vector3 destino;
     private float temporizador;
-
     private bool persiguiendo = false;
+
+    private bool asustando = false;
+    private float finSusto = 0f;
+    private float proximoSusto = 0f;
 
     void Start()
     {
+        animator = GetComponentInChildren<Animator>();
         BuscarNuevoDestino();
+    }
+
+    void OnDisable()
+    {
+        // Si la Candileja se desactiva en pleno susto, libera al jugador
+        if (asustando)
+            Movimiento.puedeMoverse = true;
     }
 
     void Update()
     {
         if (jugador == null)
             return;
+
+        // Mientras hace la animación de susto, se queda quieta mirando al jugador
+        if (asustando)
+        {
+            Vector3 haciaJugador = jugador.position - transform.position;
+            haciaJugador.y = 0f;
+            MirarHacia(haciaJugador);
+
+            SetVelocidadAnimator(0f);
+
+            if (Time.time >= finSusto)
+            {
+                asustando = false;
+                Movimiento.puedeMoverse = true;   // desbloquea al jugador
+            }
+
+            return;
+        }
+
+        float distancia = Vector3.Distance(transform.position, jugador.position);
+
+        // Si está cerca del jugador, lo asusta
+        if (distancia <= distanciaSusto && Time.time >= proximoSusto)
+        {
+            IniciarSusto();
+            return;
+        }
 
         if (JugadorVisible())
         {
@@ -43,6 +94,24 @@ public class CandilejaIA : MonoBehaviour
             persiguiendo = false;
             Patrullar();
         }
+    }
+
+    // --------------------------------------------------
+    // SUSTO
+    // --------------------------------------------------
+
+    void IniciarSusto()
+    {
+        asustando = true;
+        finSusto = Time.time + duracionSusto;
+        proximoSusto = Time.time + cooldownSusto;
+
+        Movimiento.puedeMoverse = false;   // bloquea al jugador
+
+        SetVelocidadAnimator(0f);
+
+        if (animator != null)
+            animator.SetTrigger(triggerSusto);
     }
 
     // --------------------------------------------------
@@ -71,6 +140,11 @@ public class CandilejaIA : MonoBehaviour
                 Time.deltaTime;
 
             MirarHacia(direccion);
+            SetVelocidadAnimator(1f);
+        }
+        else
+        {
+            SetVelocidadAnimator(0f);
         }
     }
 
@@ -100,7 +174,22 @@ public class CandilejaIA : MonoBehaviour
                 Time.deltaTime;
 
             MirarHacia(direccion);
+            SetVelocidadAnimator(1f);
         }
+        else
+        {
+            SetVelocidadAnimator(0f);
+        }
+    }
+
+    // --------------------------------------------------
+    // ANIMATOR
+    // --------------------------------------------------
+
+    void SetVelocidadAnimator(float valor)
+    {
+        if (animator != null)
+            animator.SetFloat(parametroVelocidad, valor);
     }
 
     // --------------------------------------------------
@@ -176,6 +265,12 @@ public class CandilejaIA : MonoBehaviour
         Gizmos.DrawWireSphere(
             transform.position,
             distanciaVision);
+
+        // Distancia de susto
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(
+            transform.position,
+            distanciaSusto);
 
         // Dirección central
         Gizmos.color = Color.red;
