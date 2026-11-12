@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MenuPrincipal.unity
     guid: 8f8bc8f154d96364cad88ee8b794e751
   - enabled: 1
+    path: Assets/Scenes/Previo.unity
+    guid: af21e425efe1e9944828c02eaf08e353
+  - enabled: 1
     path: Assets/Scenes/Candileja.unity
     guid: 8c1152f340f49154aaa70667c06a78bf
   - enabled: 1
