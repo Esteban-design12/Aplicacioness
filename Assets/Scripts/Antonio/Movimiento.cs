@@ -5,15 +5,27 @@ public class Movimiento : MonoBehaviour
     public float speed = 3.0f;
     public float velocidadGiro = 540f;
 
+    // La Candileja (u otros scripts) bloquean el movimiento con esto
+    public static bool puedeMoverse = true;
+
     private Animator animator;
 
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
+        puedeMoverse = true; // por si quedó bloqueado de una partida anterior
     }
 
     void Update()
     {
+        // Si está bloqueado, el personaje se queda quieto en Idle
+        if (!puedeMoverse)
+        {
+            if (animator != null)
+                animator.SetFloat("Speed", 0f);
+            return;
+        }
+
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
@@ -30,5 +42,10 @@ public class Movimiento : MonoBehaviour
 
         if (animator != null)
             animator.SetFloat("Speed", Mathf.Clamp01(direccion.magnitude));
+    }
+
+    void OnDisable()
+    {
+        puedeMoverse = true;
     }
 }
