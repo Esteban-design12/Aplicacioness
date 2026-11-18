@@ -3,7 +3,12 @@ guid: 196df773f6a4914429e27928f2c8b33d
 ModelImporter:
   serializedVersion: 24501
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Marco_Atlas_v02_MAT
+    second: {fileID: 2100000, guid: 47e681ab8e2216c45986402630423941, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

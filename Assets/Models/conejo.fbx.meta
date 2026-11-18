@@ -3,7 +3,12 @@ guid: a91eb199df29c444893ec228906f67d9
 ModelImporter:
   serializedVersion: 24501
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Conejo_Peluche_MAT
+    second: {fileID: 2100000, guid: 09998edc558951544ab9a5dd0ffbeecf, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
