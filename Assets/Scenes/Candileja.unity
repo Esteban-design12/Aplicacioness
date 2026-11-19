@@ -5742,7 +5742,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1124655193}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: PlayGame
+        m_MethodName: ResumeGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14614,6 +14614,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1124655192}
   - component: {fileID: 1124655193}
+  - component: {fileID: 1124655194}
   m_Layer: 0
   m_Name: MenuManager
   m_TagString: Untagged
@@ -14648,13 +14649,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d5bd5ca0029f234085adf5f49e1b48d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenu
-  mainMenuPanel: {fileID: 0}
   pausePanel: {fileID: 512976565}
   hud: {fileID: 561107279}
   scriptsToDisable: []
-  showMenuOnStart: 1
+  menuSceneName: MenuPrincipal
   freezeTime: 1
   pauseKey: 27
+--- !u!114 &1124655194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1124655191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3fbe226d04dbd24baa7d1134707608b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuInicio
+  gameSceneName: Candileja
 --- !u!1001 &1133233003
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16897,6 +16910,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AnotonioFather_Unity
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 8968f3cdfb486e94f929af530334bc85, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: cd402838670169543b4fba6f0d84c56b, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -18139,11 +18156,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.264164
+      value: 6.17
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0000005858366
+      value: 0.79
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalPosition.z
