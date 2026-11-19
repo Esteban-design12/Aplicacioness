@@ -195,8 +195,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+      - m_Target: {fileID: 1234567890123456789}
+        m_TargetAssemblyTypeName: MenuInicio, Assembly-CSharp
         m_MethodName: PlayGame
         m_Mode: 1
         m_Arguments:
@@ -220,6 +220,7 @@ GameObject:
   - component: {fileID: 2706046683702965693}
   - component: {fileID: 8280344836701465853}
   - component: {fileID: 5398249148007623362}
+  - component: {fileID: 1234567890123456789}
   m_Layer: 5
   m_Name: CanvasMenuPrincipal
   m_TagString: Untagged
@@ -653,8 +654,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+      - m_Target: {fileID: 1234567890123456789}
+        m_TargetAssemblyTypeName: MenuInicio, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
@@ -785,3 +786,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1234567890123456789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3457309621993853666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3fbe226d04dbd24baa7d1134707608b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameSceneName: Candileja
