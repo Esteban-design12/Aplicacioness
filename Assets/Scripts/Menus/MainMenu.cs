@@ -1,14 +1,14 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Controla el menú principal y el menú de pausa (Esc) dentro de la misma escena.
+/// Controla el menú de pausa (Esc) dentro de la escena de La Candileja.
+/// El menú principal ahora está en su PROPIA escena.
 /// Ponlo en un objeto vacío "MenuManager" que NUNCA se desactive (fuera de los paneles).
 /// </summary>
 public class MainMenu : MonoBehaviour
 {
     [Header("Paneles")]
-    [Tooltip("Panel del menú principal (con el botón Jugar).")]
-    public GameObject mainMenuPanel;
     [Tooltip("Panel del menú de pausa (con el botón Continuar).")]
     public GameObject pausePanel;
     [Tooltip("Opcional: el HUD. Solo se ve mientras se juega.")]
@@ -19,44 +19,39 @@ public class MainMenu : MonoBehaviour
     public Behaviour[] scriptsToDisable;
 
     [Header("Opciones")]
-    public bool showMenuOnStart = true;
+    [Tooltip("Nombre EXACTO de la escena del menú principal (como aparece en Build Settings).")]
+    public string menuSceneName = "MenuPrincipal";
     public bool freezeTime = true;
     public KeyCode pauseKey = KeyCode.Escape;
 
-    enum State { MainMenu, Playing, Paused }
-    State state;
-
-    void Awake()
-    {
-        // En Awake para desactivar los scripts antes de que corran su Start
-        if (showMenuOnStart) GoToMainMenu();
-        else StartPlaying();
-    }
+    bool paused;
 
     void Start()
     {
-        // Reafirma el cursor por si otro script lo bloqueó
-        if (state != State.Playing) SetCursor(true);
+        // Al cargar la escena se empieza a jugar de una vez
+        StartPlaying();
     }
 
     void Update()
     {
         if (!Input.GetKeyDown(pauseKey)) return;
 
-        if (state == State.Playing) Pause();
-        else if (state == State.Paused) ResumeGame();
+        if (paused) ResumeGame();
+        else Pause();
     }
 
     // ---------- Botones ----------
 
-    /// <summary>Botón JUGAR (menú principal).</summary>
-    public void PlayGame() => StartPlaying();
-
     /// <summary>Botón CONTINUAR (menú de pausa).</summary>
     public void ResumeGame() => StartPlaying();
 
-    /// <summary>Botón MENÚ PRINCIPAL (menú de pausa).</summary>
-    public void BackToMenu() => GoToMainMenu();
+    /// <summary>Botón MENÚ PRINCIPAL (menú de pausa): carga la escena del menú.</summary>
+    public void BackToMenu()
+    {
+        Time.timeScale = 1f; // que el menú no quede congelado
+        SetCursor(true);
+        SceneManager.LoadScene(menuSceneName);
+    }
 
     /// <summary>Botón SALIR.</summary>
     public void QuitGame()
@@ -71,19 +66,9 @@ public class MainMenu : MonoBehaviour
 
     // ---------- Estados ----------
 
-    void GoToMainMenu()
-    {
-        state = State.MainMenu;
-        Show(mainMenuPanel, true);
-        Show(pausePanel, false);
-        Show(hud, false);
-        Freeze(true);
-    }
-
     void Pause()
     {
-        state = State.Paused;
-        Show(mainMenuPanel, false);
+        paused = true;
         Show(pausePanel, true);
         Show(hud, false);
         Freeze(true);
@@ -91,16 +76,10 @@ public class MainMenu : MonoBehaviour
 
     void StartPlaying()
     {
-        state = State.Playing;
-        Show(mainMenuPanel, false);
+        paused = false;
         Show(pausePanel, false);
         Show(hud, true);
-
-        foreach (var script in scriptsToDisable)
-            if (script) script.enabled = true;
-
-        Time.timeScale = 1f;
-        SetCursor(false);
+        Freeze(false);
     }
 
     // ---------- Utilidades ----------
