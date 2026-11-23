@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Recuerdo_2
   m_EditorClassIdentifier: Assembly-CSharp::MemoryData
   id: Conejo
-  displayName: 
+  displayName: Conejo de peluche
   description: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 2824c7c0abcff1d49905e3643ebe5da0, type: 3}

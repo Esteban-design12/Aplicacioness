@@ -2,13 +2,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Menú principal en su PROPIA escena.
-/// Ponlo en un objeto vacío "MenuManager" dentro de la escena del menú.
+/// Menú principal en su PROPIA escena (va en CanvasMenuPrincipal).
+/// Jugar → Previo → Tutorial → Candileja.
 /// </summary>
 public class MenuInicio : MonoBehaviour
 {
-    [Tooltip("Nombre EXACTO de la escena del juego (como aparece en Build Settings).")]
-    public string gameSceneName = "Candileja";
+    [Tooltip("Escena que se abre al pulsar JUGAR (primero el Previo).")]
+    public string gameSceneName = "Previo";
 
     void Start()
     {
@@ -24,6 +24,12 @@ public class MenuInicio : MonoBehaviour
     public void PlayGame()
     {
         SceneManager.LoadScene(gameSceneName);
+    }
+
+    /// <summary>Botones OPCIONES y CRÉDITOS: carga la escena que se escriba en el botón.</summary>
+    public void IrA(string escena)
+    {
+        SceneManager.LoadScene(escena);
     }
 
     /// <summary>Botón SALIR.</summary>

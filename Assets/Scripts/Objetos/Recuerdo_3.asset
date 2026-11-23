@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Recuerdo_3
   m_EditorClassIdentifier: Assembly-CSharp::MemoryData
   id: Carta
-  displayName: 
+  displayName: Carta
   description: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: aa8175708a63dce41a1648179ef42287, type: 3}

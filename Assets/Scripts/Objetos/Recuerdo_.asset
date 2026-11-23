@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Recuerdo_
   m_EditorClassIdentifier: Assembly-CSharp::MemoryData
   id: Foto
-  displayName: 
+  displayName: Portarretrato
   description: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 4ab9bc51b04075b4da24508e4478919a, type: 3}
