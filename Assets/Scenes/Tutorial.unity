@@ -200,7 +200,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 83369212}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1900000002}
+        m_TargetAssemblyTypeName: CambiarEscena, Assembly-CSharp
+        m_MethodName: IrA
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Candileja
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &83369212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -641,7 +653,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1022964958}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1900000002}
+        m_TargetAssemblyTypeName: CambiarEscena, Assembly-CSharp
+        m_MethodName: IrA
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Previo
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1022964958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -761,7 +785,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1418761241}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1900000002}
+        m_TargetAssemblyTypeName: CambiarEscena, Assembly-CSharp
+        m_MethodName: IrA
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Candileja
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1418761241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1031,7 +1067,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1679742658}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1900000002}
+        m_TargetAssemblyTypeName: CambiarEscena, Assembly-CSharp
+        m_MethodName: IrA
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: MenuPrincipal
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1679742658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1082,6 +1130,7 @@ GameObject:
   - component: {fileID: 1723148123}
   - component: {fileID: 1723148122}
   - component: {fileID: 1723148121}
+  - component: {fileID: 1900000002}
   m_Layer: 5
   m_Name: CanvasTutorial1
   m_TagString: Untagged
@@ -1370,6 +1419,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1900000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723148120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8312b65693a44dfb526cbb63c1336f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mostrarCursor: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

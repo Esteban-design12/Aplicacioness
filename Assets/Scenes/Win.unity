@@ -493,7 +493,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1640322302}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1900000006}
+        m_TargetAssemblyTypeName: CambiarEscena, Assembly-CSharp
+        m_MethodName: IrA
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Candileja
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1640322302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,6 +648,7 @@ GameObject:
   - component: {fileID: 1740654315}
   - component: {fileID: 1740654314}
   - component: {fileID: 1740654313}
+  - component: {fileID: 1900000006}
   m_Layer: 5
   m_Name: CanvasWin
   m_TagString: Untagged
@@ -1013,7 +1026,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1960698010}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1900000006}
+        m_TargetAssemblyTypeName: CambiarEscena, Assembly-CSharp
+        m_MethodName: IrA
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: MenuPrincipal
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1960698010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1052,6 +1077,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1960698007}
   m_CullTransparentMesh: 1
+--- !u!114 &1900000006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1740654312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8312b65693a44dfb526cbb63c1336f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mostrarCursor: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

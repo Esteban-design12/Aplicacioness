@@ -1,74 +1,175 @@
 using UnityEngine;
 
 /// <summary>
-/// Cámara en tercera persona (sobre el hombro) con rotación por mouse
-/// y colisión contra paredes. Va en la Main Camera, SIN ser hija de Antonio.
+/// Cámara en tercera persona para el laberinto de La Candileja.
+/// - Sigue a Antonio desde atrás, baja y cerca (estilo terror).
+/// - No puede subir por encima de los muros (límite de inclinación y de altura).
+/// - Si hay un muro entre Antonio y la cámara, se acerca para no atravesarlo.
+/// Va en la Main Camera (NO como hija de Antonio).
 /// </summary>
 public class ThirdPersonCamera : MonoBehaviour
 {
     [Header("Objetivo")]
-    [Tooltip("Hijo vacío de Antonio a la altura de los hombros/cabeza (≈1.6 m).")]
+    [Tooltip("Antonio. Si está vacío, se busca solo (el objeto con el script Movimiento).")]
     public Transform target;
+    [Tooltip("Altura del punto que mira la cámara (≈ hombros). 0 = calcularla según el tamaño de Antonio.")]
+    public float pivotHeight = 0f;
 
     [Header("Posición")]
-    public float distance = 3.5f;
-    [Tooltip("X = desplazamiento lateral (hombro), Y = altura extra.")]
-    public Vector2 shoulderOffset = new Vector2(0.5f, 0.1f);
+    [Tooltip("Distancia detrás de Antonio.")]
+    public float distance = 2.6f;
+    [Tooltip("Desplazamiento hacia el hombro derecho.")]
+    public float shoulderOffset = 0.35f;
 
-    [Header("Rotación")]
+    [Header("Rotación con el mouse")]
     public float mouseSensitivity = 2f;
-    public float minPitch = -20f;
-    public float maxPitch = 60f;
+    [Tooltip("Inclinación inicial (grados hacia abajo).")]
+    public float startPitch = 12f;
+    [Tooltip("Cuánto puede mirar hacia arriba.")]
+    public float minPitch = -10f;
+    [Tooltip("Cuánto puede mirar hacia abajo. Bajo = no se ve por encima de los muros.")]
+    public float maxPitch = 28f;
 
-    [Header("Suavizado y colisión")]
-    public float smoothTime = 0.04f;
+    [Header("No ver por encima de los muros")]
+    [Tooltip("Altura máxima de la cámara sobre los pies de Antonio (metros).")]
+    public float maxHeightAboveFeet = 2.4f;
+
+    [Header("Colisión con paredes")]
     public float collisionRadius = 0.25f;
-    [Tooltip("Excluye la capa de Antonio para que la cámara no choque con él.")]
     public LayerMask collisionMask = ~0;
+    [Tooltip("Qué tan rápido vuelve a alejarse después de acercarse por un muro.")]
+    public float returnSpeed = 4f;
 
-    /// <summary>Dirección horizontal de la cámara: úsala en tu movimiento.</summary>
+    [Header("Suavizado")]
+    public float followSmooth = 0.06f;
+
+    /// <summary>Dirección horizontal de la cámara (la usa Movimiento).</summary>
     public Quaternion PlanarRotation => Quaternion.Euler(0f, yaw, 0f);
 
     float yaw, pitch;
-    Vector3 velocity;
+    float currentDistance;
+    Vector3 smoothedPivot, pivotVelocity;
+    Collider[] targetColliders = new Collider[0];
+    readonly RaycastHit[] hits = new RaycastHit[16];
 
     void Start()
     {
-        if (target) yaw = target.eulerAngles.y;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        if (!target)
+        {
+            var player = FindFirstObjectByType<Movimiento>();
+            if (player) target = player.transform;
+        }
+        if (!target)
+        {
+            Debug.LogWarning("ThirdPersonCamera: no encontré a Antonio (script Movimiento).", this);
+            enabled = false;
+            return;
+        }
+
+        targetColliders = target.GetComponentsInChildren<Collider>();
+
+        if (pivotHeight <= 0f)
+        {
+            // ~85 % de la estatura de Antonio = altura de los hombros
+            float h = 1.7f;
+            foreach (var c in targetColliders)
+                if (!c.isTrigger) { h = c.bounds.size.y; break; }
+            if (h < 0.5f || h > 3f) h = 1.7f; // colisionador con medidas irreales
+            pivotHeight = Mathf.Clamp(h * 0.85f, 0.8f, 2.2f);
+        }
+
+        var cam = GetComponent<Camera>();
+        if (cam) cam.nearClipPlane = 0.08f; // evita ver "a través" de muros muy cercanos
+
+        yaw = target.eulerAngles.y;
+        pitch = startPitch;
+        currentDistance = distance;
+        smoothedPivot = Pivot();
+        Place(true);
     }
 
     void LateUpdate()
     {
         if (!target) return;
 
-        // Si el cursor está libre (inventario/menú abierto), la cámara no gira.
+        // Si el cursor está libre (pausa, inventario...) la cámara no gira
         if (Cursor.lockState == CursorLockMode.Locked)
         {
             yaw += Input.GetAxis("Mouse X") * mouseSensitivity;
-            pitch = Mathf.Clamp(pitch - Input.GetAxis("Mouse Y") * mouseSensitivity, minPitch, maxPitch);
+            pitch -= Input.GetAxis("Mouse Y") * mouseSensitivity;
         }
+        pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
+
+        Place(false);
+    }
+
+    Vector3 Pivot()
+    {
+        return target.position + Vector3.up * pivotHeight
+               + PlanarRotation * new Vector3(shoulderOffset, 0f, 0f);
+    }
+
+    void Place(bool instant)
+    {
+        Vector3 head = target.position + Vector3.up * pivotHeight;
+        Vector3 pivot = Pivot();
+
+        // Que el desplazamiento al hombro tampoco atraviese un muro
+        Vector3 side = pivot - head;
+        if (side.sqrMagnitude > 0.0001f &&
+            Cast(head, side.normalized, side.magnitude, out float sideHit))
+            pivot = head + side.normalized * Mathf.Max(0f, sideHit - 0.05f);
+
+        smoothedPivot = instant ? pivot
+            : Vector3.SmoothDamp(smoothedPivot, pivot, ref pivotVelocity, followSmooth);
 
         Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);
+        Vector3 back = -(rotation * Vector3.forward);
 
-        // Punto de pivote: el objetivo desplazado hacia el hombro
-        Vector3 pivot = target.position
-                        + PlanarRotation * new Vector3(shoulderOffset.x, shoulderOffset.y, 0f);
+        // Si hay un muro detrás, la cámara se acerca de inmediato; luego vuelve suave
+        float wanted = distance;
+        if (Cast(smoothedPivot, back, distance, out float hitDist))
+            wanted = Mathf.Max(0.2f, hitDist - 0.05f);
 
-        // Posición deseada detrás del pivote
-        Vector3 direction = -(rotation * Vector3.forward);
-        float finalDistance = distance;
+        currentDistance = (wanted < currentDistance || instant)
+            ? wanted
+            : Mathf.MoveTowards(currentDistance, wanted, returnSpeed * Time.deltaTime);
 
-        // Si hay una pared en medio, acerca la cámara
-        if (Physics.SphereCast(pivot, collisionRadius, direction, out RaycastHit hit,
-                distance, collisionMask, QueryTriggerInteraction.Ignore))
+        Vector3 pos = smoothedPivot + back * currentDistance;
+
+        // Nunca más alto que el límite: así no se asoma por encima de los muros
+        float maxY = target.position.y + maxHeightAboveFeet;
+        bool limitada = pos.y > maxY;
+        if (limitada) pos.y = maxY;
+
+        transform.position = pos;
+        // Si se limitó la altura, mirar a Antonio; si no, usar la rotación del mouse
+        transform.rotation = limitada
+            ? Quaternion.LookRotation(smoothedPivot - pos, Vector3.up)
+            : rotation;
+    }
+
+    /// <summary>SphereCast que ignora a Antonio y a los triggers.</summary>
+    bool Cast(Vector3 from, Vector3 dir, float maxDist, out float nearest)
+    {
+        nearest = maxDist;
+        bool found = false;
+        int n = Physics.SphereCastNonAlloc(from, collisionRadius, dir, hits, maxDist,
+                                           collisionMask, QueryTriggerInteraction.Ignore);
+        for (int i = 0; i < n; i++)
         {
-            finalDistance = Mathf.Max(0.3f, hit.distance);
+            var h = hits[i];
+            if (IsTarget(h.collider)) continue;
+            if (h.distance <= 0f && h.point == Vector3.zero) continue; // ya superpuesto al empezar
+            if (h.distance < nearest) { nearest = h.distance; found = true; }
         }
+        return found;
+    }
 
-        Vector3 desired = pivot + direction * finalDistance;
-        transform.position = Vector3.SmoothDamp(transform.position, desired, ref velocity, smoothTime);
-        transform.rotation = rotation;
+    bool IsTarget(Collider c)
+    {
+        if (c.transform.IsChildOf(target)) return true;
+        foreach (var t in targetColliders) if (t == c) return true;
+        return false;
     }
 }
