@@ -533,7 +533,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8960353309949209771}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1234567890123456789}
+        m_TargetAssemblyTypeName: MenuInicio, Assembly-CSharp
+        m_MethodName: IrA
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Opciones
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6908941353563366548
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,7 +797,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4814728908238156797}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1234567890123456789}
+        m_TargetAssemblyTypeName: MenuInicio, Assembly-CSharp
+        m_MethodName: IrA
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Creditos
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1234567890123456789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -798,4 +822,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3fbe226d04dbd24baa7d1134707608b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameSceneName: Candileja
+  gameSceneName: Previo

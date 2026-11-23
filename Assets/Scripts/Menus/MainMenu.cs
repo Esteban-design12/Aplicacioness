@@ -21,10 +21,16 @@ public class MainMenu : MonoBehaviour
     [Header("Opciones")]
     [Tooltip("Nombre EXACTO de la escena del menú principal (como aparece en Build Settings).")]
     public string menuSceneName = "MenuPrincipal";
+    [Tooltip("Escena de opciones. Se abre ENCIMA del juego pausado (no se pierde la partida).")]
+    public string optionsSceneName = "Opciones";
     public bool freezeTime = true;
     public KeyCode pauseKey = KeyCode.Escape;
 
     bool paused;
+    bool optionsOpen;
+
+    void OnEnable() => SceneManager.sceneUnloaded += OnSceneUnloaded;
+    void OnDisable() => SceneManager.sceneUnloaded -= OnSceneUnloaded;
 
     void Start()
     {
@@ -34,6 +40,7 @@ public class MainMenu : MonoBehaviour
 
     void Update()
     {
+        if (optionsOpen) return; // mientras Opciones está abierta, Esc no hace nada
         if (!Input.GetKeyDown(pauseKey)) return;
 
         if (paused) ResumeGame();
@@ -51,6 +58,27 @@ public class MainMenu : MonoBehaviour
         Time.timeScale = 1f; // que el menú no quede congelado
         SetCursor(true);
         SceneManager.LoadScene(menuSceneName);
+    }
+
+    /// <summary>Botón OPCIONES (menú de pausa): abre Opciones encima del juego pausado.</summary>
+    public void OpenOptions()
+    {
+        if (optionsOpen) return;
+        optionsOpen = true;
+        Show(pausePanel, false);
+        SceneManager.LoadScene(optionsSceneName, LoadSceneMode.Additive);
+    }
+
+    void OnSceneUnloaded(Scene scene)
+    {
+        // Al cerrar Opciones se vuelve a ver el menú de pausa
+        if (!optionsOpen || scene.name != optionsSceneName) return;
+        optionsOpen = false;
+        if (paused)
+        {
+            Show(pausePanel, true);
+            SetCursor(true);
+        }
     }
 
     /// <summary>Botón SALIR.</summary>

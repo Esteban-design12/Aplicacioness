@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Va en la Candileja (el objeto "IA"). Si toca a Antonio, lo devuelve a su checkpoint.
+/// Va en la Candileja (el objeto "IA"). Si toca a Antonio, carga la escena Lose
+/// (o, si "Lose Scene Name" está vacío, lo devuelve a su checkpoint).
 /// Detecta el contacto por distancia, así que no depende de Rigidbody ni de triggers.
 /// </summary>
 public class CandilejaTouch : MonoBehaviour
@@ -14,6 +16,10 @@ public class CandilejaTouch : MonoBehaviour
     [Tooltip("Altura desde los pies de la Candileja donde se mide (≈ centro del cuerpo).")]
     public float heightOffset = 1f;
     public LayerMask detectMask = ~0;
+
+    [Header("Derrota")]
+    [Tooltip("Escena que se carga cuando la Candileja atrapa a Antonio. Déjalo vacío para usar el checkpoint.")]
+    public string loseSceneName = "Lose";
 
     [Header("Después de atrapar")]
     [Tooltip("Evita que atrape varias veces seguidas al reaparecer Antonio.")]
@@ -58,9 +64,19 @@ public class CandilejaTouch : MonoBehaviour
     void Catch(PlayerRespawn player)
     {
         nextAllowedTime = Time.time + cooldown;
+        onCaught?.Invoke();
+
+        // Derrota: ir a la escena Lose
+        if (!string.IsNullOrEmpty(loseSceneName))
+        {
+            Time.timeScale = 1f;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            SceneManager.LoadScene(loseSceneName);
+            return;
+        }
 
         player.Respawn();
-        onCaught?.Invoke();
 
         if (returnToStartOnCatch) ReturnToStart();
     }
