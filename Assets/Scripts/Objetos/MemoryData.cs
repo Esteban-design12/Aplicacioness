@@ -11,4 +11,6 @@ public class MemoryData : ScriptableObject
     public string displayName;
     [TextArea(2, 5)] public string description;
     public Sprite icon;
+    [Tooltip("Sonido al recoger este recuerdo (ej. Fotografia, manipular conejo...).")]
+    public AudioClip sonido;
 }

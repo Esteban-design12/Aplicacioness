@@ -50,6 +50,7 @@ public class ThirdPersonCamera : MonoBehaviour
     float currentDistance;
     Vector3 smoothedPivot, pivotVelocity;
     Collider[] targetColliders = new Collider[0];
+    InventoryUI inventario;
     readonly RaycastHit[] hits = new RaycastHit[16];
 
     void Start()
@@ -67,6 +68,7 @@ public class ThirdPersonCamera : MonoBehaviour
         }
 
         targetColliders = target.GetComponentsInChildren<Collider>();
+        inventario = FindFirstObjectByType<InventoryUI>(FindObjectsInactive.Include);
 
         if (pivotHeight <= 0f)
         {
@@ -92,15 +94,30 @@ public class ThirdPersonCamera : MonoBehaviour
     {
         if (!target) return;
 
-        // Si el cursor está libre (pausa, inventario...) la cámara no gira
-        if (Cursor.lockState == CursorLockMode.Locked)
+        // Gira siempre que se esté jugando (sin pausa ni inventario abierto).
+        // Además asegura que el cursor quede bloqueado: así no hace falta pulsar Tab al empezar.
+        if (PuedeGirar())
         {
+            if (Cursor.lockState != CursorLockMode.Locked)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+
             yaw += Input.GetAxis("Mouse X") * mouseSensitivity;
             pitch -= Input.GetAxis("Mouse Y") * mouseSensitivity;
         }
         pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
 
         Place(false);
+    }
+
+    bool PuedeGirar()
+    {
+        if (Time.timeScale == 0f) return false;                 // pausa u opciones
+        if (inventario && inventario.IsOpen) return false;      // inventario abierto
+        if (!Application.isFocused) return false;               // ventana sin foco
+        return true;
     }
 
     Vector3 Pivot()

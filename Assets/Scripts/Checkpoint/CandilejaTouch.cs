@@ -66,6 +66,8 @@ public class CandilejaTouch : MonoBehaviour
         nextAllowedTime = Time.time + cooldown;
         onCaught?.Invoke();
 
+        if (AudioJuego.Sonidos) AudioJuego.Efecto(AudioJuego.Sonidos.capturaJugador);
+
         // Derrota: ir a la escena Lose
         if (!string.IsNullOrEmpty(loseSceneName))
         {

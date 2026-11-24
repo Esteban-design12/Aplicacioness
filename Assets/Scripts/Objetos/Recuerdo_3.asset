@@ -16,3 +16,4 @@ MonoBehaviour:
   displayName: Carta
   description: 
   icon: {fileID: 21300000, guid: aa8175708a63dce41a1648179ef42287, type: 3}
+  sonido: {fileID: 8300000, guid: a7cb464cb5f960348921a73b4be98811, type: 3}
