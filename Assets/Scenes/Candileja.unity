@@ -5297,8 +5297,58 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 2794483166113918858, guid: 7ad35a5fadec73241ba5e24b00ac78f9, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -1086253750791215781, guid: 7ad35a5fadec73241ba5e24b00ac78f9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 401874217}
+    - targetCorrespondingSourceObject: {fileID: -1086253750791215781, guid: 7ad35a5fadec73241ba5e24b00ac78f9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 401874216}
   m_SourcePrefab: {fileID: 100100000, guid: 7ad35a5fadec73241ba5e24b00ac78f9, type: 3}
+--- !u!1 &401874215 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1086253750791215781, guid: 7ad35a5fadec73241ba5e24b00ac78f9, type: 3}
+  m_PrefabInstance: {fileID: 401874214}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &401874216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401874215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fef5a9ddefa1b2c43bdaf0d5c369c5f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuertaInteractuable
+  prompt: Abrir puerta
+  animacionAgacharse: 0
+  puntoBisagra: {x: 0.6581922, y: 0.4779295, z: 4.7270617}
+  ejeBisagra: {x: 0, y: 1, z: 0}
+  anguloApertura: -95
+  duracion: 0.65
+--- !u!65 &401874217
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401874215}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 113.6911, y: 237.02937, z: 23.546661}
+  m_Center: {x: -0.0000019073486, y: 122.51215, z: -0.000005722046}
 --- !u!1001 &402911355
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5795,7 +5845,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 50}
+  m_AnchoredPosition: {x: 0, y: 100}
   m_SizeDelta: {x: 250, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &428807966
