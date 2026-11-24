@@ -16,3 +16,4 @@ MonoBehaviour:
   displayName: Conejo de peluche
   description: 
   icon: {fileID: 21300000, guid: 2824c7c0abcff1d49905e3643ebe5da0, type: 3}
+  sonido: {fileID: 8300000, guid: dc34ffb6369a0554e80e1ff36150fe8c, type: 3}

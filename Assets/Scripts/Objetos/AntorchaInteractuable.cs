@@ -32,6 +32,7 @@ public class AntorchaInteractuable : Interactable
     float tiempoEncendido;
     bool encendiendo;
     bool encendida;
+    AudioSource sonidoFuego;
 
     public bool EstaEncendida => encendida;
     public bool EstaEncendiendo => encendiendo;
@@ -80,6 +81,9 @@ public class AntorchaInteractuable : Interactable
         llama.localScale = escalaOriginal * 0.001f;
         llama.gameObject.SetActive(true);
         luzFuego.enabled = true;
+
+        if (AudioJuego.Sonidos)
+            AudioJuego.Efecto3D(AudioJuego.Sonidos.encenderAntorcha, transform.position, 1f, 15f);
     }
 
     public void Apagar()
@@ -102,6 +106,8 @@ public class AntorchaInteractuable : Interactable
         }
 
         AplicarEmision(0f);
+
+        if (sonidoFuego) sonidoFuego.Stop();
     }
 
     void Update()
@@ -131,6 +137,12 @@ public class AntorchaInteractuable : Interactable
         {
             encendiendo = false;
             encendida = true;
+
+            // Crepitar de la antorcha encendida
+            if (sonidoFuego) sonidoFuego.Play();
+            else if (AudioJuego.Sonidos)
+                sonidoFuego = AudioJuego.BucleEn(gameObject, AudioJuego.Sonidos.antorchaEncendida, 0.8f, 10f);
+
             alEncender.Invoke();
         }
     }

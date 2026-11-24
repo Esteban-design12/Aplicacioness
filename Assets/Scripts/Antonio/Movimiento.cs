@@ -40,6 +40,7 @@ public class Movimiento : MonoBehaviour
         {
             if (animator != null)
                 animator.SetFloat("Speed", 0f);
+            AudioJuego.Pasos(false);
             return;
         }
 
@@ -69,6 +70,9 @@ public class Movimiento : MonoBehaviour
 
         if (animator != null)
             animator.SetFloat("Speed", Mathf.Clamp01(direccion.magnitude));
+
+        // Sonido de pasos mientras camina (no en pausa)
+        AudioJuego.Pasos(direccion.magnitude > 0.1f && Time.timeScale > 0f);
     }
 
     /// <summary>Recorta el paso si hay un muro y se desliza a lo largo de él.</summary>
@@ -136,5 +140,6 @@ public class Movimiento : MonoBehaviour
     void OnDisable()
     {
         puedeMoverse = true;
+        AudioJuego.Pasos(false);
     }
 }
