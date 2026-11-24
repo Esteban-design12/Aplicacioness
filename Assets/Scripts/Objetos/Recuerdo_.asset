@@ -16,3 +16,4 @@ MonoBehaviour:
   displayName: Portarretrato
   description: 
   icon: {fileID: 21300000, guid: 4ab9bc51b04075b4da24508e4478919a, type: 3}
+  sonido: {fileID: 8300000, guid: c02aa25b01d4861419d425aa4c5c8c2c, type: 3}
