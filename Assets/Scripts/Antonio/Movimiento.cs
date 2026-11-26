@@ -4,6 +4,9 @@ using UnityEngine;
 /// Movimiento de Antonio.
 /// - WASD / flechas en la dirección hacia donde mira la cámara.
 /// - No atraviesa los muros: se detiene y se desliza a lo largo de ellos.
+/// - Sube rampas y escalones bajos (hasta "alturaEscalon").
+/// - Baja pegado a las rampas y, si queda en el aire, cae con gravedad hasta el suelo.
+/// - El pivote de Antonio está en los PIES, y el detector de muros se calcula desde ahí.
 /// </summary>
 public class Movimiento : MonoBehaviour
 {
@@ -12,10 +15,30 @@ public class Movimiento : MonoBehaviour
 
     [Header("Choque con muros")]
     public bool bloquearConParedes = true;
-    [Tooltip("Capas que bloquean a Antonio (muros, objetos...).")]
+    [Tooltip("Capas que bloquean a Antonio (muros, pisos, objetos...).")]
     public LayerMask capasBloqueo = ~0;
     [Tooltip("Separación mínima con la pared.")]
     public float margen = 0.05f;
+    [Tooltip("Lo que sea más bajo que esto (desde los pies) no lo frena y lo sube: rampas, bordes, escalones.")]
+    public float alturaEscalon = 0.25f;
+    [Tooltip("Altura del cuerpo de Antonio, medida desde los pies.")]
+    public float alturaCuerpo = 1.2f;
+
+    [Header("Rampas, escalones y caída")]
+    [Tooltip("Si está activo, Antonio sigue la altura del suelo y cae cuando queda en el aire.")]
+    public bool seguirRampas = true;
+    [Tooltip("Si el suelo está a esta distancia o menos por debajo, baja pegado a él (rampas). Si está más abajo, cae.")]
+    public float pegadoAlSuelo = 0.3f;
+    [Tooltip("Fuerza de la caída. Más alto = cae más rápido.")]
+    public float gravedad = 20f;
+    [Tooltip("Velocidad máxima de caída.")]
+    public float velocidadMaximaCaida = 15f;
+    [Tooltip("Súbelo si los zapatos se hunden en el piso; bájalo si se ve flotando un poquito.")]
+    public float ajustePies = 0f;
+
+    [Header("Depuración")]
+    [Tooltip("Escribe en la Console con qué objeto choca Antonio.")]
+    public bool depurar = false;
 
     // La Candileja (u otros scripts) bloquean el movimiento con esto
     public static bool puedeMoverse = true;
@@ -23,7 +46,11 @@ public class Movimiento : MonoBehaviour
     private Animator animator;
     private CapsuleCollider capsula;
     private Transform camara;
+    private float ultimoLog;
+    private float velocidadVertical;
+    private bool enSuelo;
     private readonly RaycastHit[] golpes = new RaycastHit[16];
+    private readonly RaycastHit[] golpesSuelo = new RaycastHit[32];
 
     void Start()
     {
@@ -31,6 +58,14 @@ public class Movimiento : MonoBehaviour
         capsula = GetComponent<CapsuleCollider>();
         if (Camera.main) camara = Camera.main.transform;
         puedeMoverse = true; // por si quedó bloqueado de una partida anterior
+
+        // La altura la maneja este script: se evita que la física de Unity pelee con él
+        Rigidbody cuerpo = GetComponent<Rigidbody>();
+        if (cuerpo)
+        {
+            cuerpo.useGravity = false;
+            cuerpo.isKinematic = true;
+        }
     }
 
     void Update()
@@ -41,6 +76,7 @@ public class Movimiento : MonoBehaviour
             if (animator != null)
                 animator.SetFloat("Speed", 0f);
             AudioJuego.Pasos(false);
+            AplicarAltura(); // aunque esté bloqueado, no se queda flotando
             return;
         }
 
@@ -61,6 +97,7 @@ public class Movimiento : MonoBehaviour
         {
             Vector3 paso = direccion.normalized * speed * Time.deltaTime;
             if (bloquearConParedes) paso = Deslizar(paso);
+
             transform.position += paso;
 
             Quaternion destino = Quaternion.LookRotation(direccion);
@@ -68,11 +105,84 @@ public class Movimiento : MonoBehaviour
                 transform.rotation, destino, velocidadGiro * Time.deltaTime);
         }
 
+        // Se revisa el suelo en cada cuadro, se esté moviendo o no
+        AplicarAltura();
+
         if (animator != null)
             animator.SetFloat("Speed", Mathf.Clamp01(direccion.magnitude));
 
-        // Sonido de pasos mientras camina (no en pausa)
-        AudioJuego.Pasos(direccion.magnitude > 0.1f && Time.timeScale > 0f);
+        // Sonido de pasos mientras camina (no en pausa ni cayendo)
+        bool pisando = enSuelo || !seguirRampas;
+        AudioJuego.Pasos(direccion.magnitude > 0.1f && Time.timeScale > 0f && pisando);
+    }
+
+    /// <summary>
+    /// Pone a Antonio a la altura correcta:
+    /// - Si el suelo está un poco más arriba (rampa, escalón), lo sube.
+    /// - Si venía pisando y el suelo está un poco más abajo, lo baja pegado.
+    /// - Si el suelo está lejos hacia abajo, cae con gravedad hasta tocarlo.
+    /// </summary>
+    void AplicarAltura()
+    {
+        if (!seguirRampas || Time.deltaTime <= 0f) return; // en pausa no hace nada
+
+        Vector3 pos = transform.position;
+        float pies = pos.y - ajustePies;
+
+        // Si no hay ningún suelo debajo, no se deja caer al vacío
+        if (!BuscarSuelo(new Vector3(pos.x, pies, pos.z), out float suelo))
+        {
+            velocidadVertical = 0f;
+            return;
+        }
+
+        float distancia = pies - suelo; // positivo: está por encima del suelo
+
+        if (distancia <= 0f || (enSuelo && distancia <= pegadoAlSuelo))
+        {
+            pies = suelo;
+            velocidadVertical = 0f;
+            enSuelo = true;
+        }
+        else
+        {
+            velocidadVertical = Mathf.Max(velocidadVertical - gravedad * Time.deltaTime,
+                                          -velocidadMaximaCaida);
+            pies += velocidadVertical * Time.deltaTime;
+            enSuelo = pies <= suelo;
+            if (enSuelo) // aterrizó: nunca pasa por debajo del suelo
+            {
+                pies = suelo;
+                velocidadVertical = 0f;
+            }
+        }
+
+        transform.position = new Vector3(pos.x, pies + ajustePies, pos.z);
+    }
+
+    /// <summary>
+    /// Busca el suelo más alto que esté debajo de los pies (o apenas por encima,
+    /// hasta "alturaEscalon"). Ignora paredes y a Antonio.
+    /// </summary>
+    bool BuscarSuelo(Vector3 pies, out float y)
+    {
+        y = 0f;
+        float altoRayo = alturaEscalon + 0.01f;
+        Vector3 origen = pies + Vector3.up * altoRayo;
+        int n = Physics.RaycastNonAlloc(origen, Vector3.down, golpesSuelo,
+                                        100f, capasBloqueo,
+                                        QueryTriggerInteraction.Ignore);
+        bool hay = false;
+        float mejor = float.MinValue;
+        for (int i = 0; i < n; i++)
+        {
+            var h = golpesSuelo[i];
+            if (h.collider.transform.IsChildOf(transform)) continue; // el propio Antonio
+            if (h.normal.y < 0.6f) continue;                          // paredes
+            if (h.point.y > mejor) { mejor = h.point.y; hay = true; }
+        }
+        if (hay) y = mejor;
+        return hay;
     }
 
     /// <summary>Recorta el paso si hay un muro y se desliza a lo largo de él.</summary>
@@ -102,25 +212,19 @@ public class Movimiento : MonoBehaviour
         float dist = paso.magnitude;
         if (dist < 0.00001f) return false;
 
-        // Cápsula de Antonio en metros reales, levantada un poco para no rozar el suelo
-        float radio, alto; Vector3 centro;
-        Bounds b = capsula ? capsula.bounds : default;
-        if (capsula && b.size.y > 0.5f && b.size.y < 3f)
+        // El pivote de Antonio está en los pies: la cápsula se calcula desde ahí,
+        // dejando libre lo que esté por debajo de "alturaEscalon".
+        float radio = 0.3f;
+        if (capsula)
         {
-            centro = b.center;
+            Bounds b = capsula.bounds;
             radio = Mathf.Min(b.extents.x, b.extents.z) * 0.9f;
-            alto = b.size.y;
-        }
-        else // sin cápsula o con medidas irreales: tamaño de una persona
-        {
-            radio = 0.3f; alto = 1.7f;
-            centro = transform.position + Vector3.up * alto * 0.5f;
         }
         radio = Mathf.Clamp(radio, 0.1f, 0.6f);
-        float subida = Mathf.Min(0.3f, alto * 0.2f); // escalones/suelo
-        Vector3 abajo = new Vector3(centro.x, centro.y - alto * 0.5f + radio + subida, centro.z);
-        Vector3 arriba = new Vector3(centro.x, centro.y + alto * 0.5f - radio, centro.z);
-        if (arriba.y < abajo.y) arriba.y = abajo.y;
+
+        Vector3 pies = transform.position - Vector3.up * ajustePies;
+        Vector3 abajo = pies + Vector3.up * (alturaEscalon + radio);
+        Vector3 arriba = pies + Vector3.up * Mathf.Max(alturaEscalon + radio, alturaCuerpo - radio);
 
         int n = Physics.CapsuleCastNonAlloc(abajo, arriba, radio, paso / dist, golpes,
                                             dist + margen, capasBloqueo, QueryTriggerInteraction.Ignore);
@@ -134,12 +238,19 @@ public class Movimiento : MonoBehaviour
             if (h.normal.y > 0.6f) continue;                            // suelo / rampas
             if (h.distance < mejor) { mejor = h.distance; cercano = h; hay = true; }
         }
+
+        if (hay && depurar && Time.time - ultimoLog > 0.5f)
+        {
+            ultimoLog = Time.time;
+            Debug.Log("Antonio choca con: " + cercano.collider.name, cercano.collider);
+        }
         return hay;
     }
 
     void OnDisable()
     {
         puedeMoverse = true;
+        velocidadVertical = 0f;
         AudioJuego.Pasos(false);
     }
 }
