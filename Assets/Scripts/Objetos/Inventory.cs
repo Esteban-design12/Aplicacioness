@@ -15,12 +15,19 @@ public class Inventory : MonoBehaviour
 
     readonly List<MemoryData> items = new List<MemoryData>();
 
-    void Awake() => Instance = this;
+    void Awake()
+    {
+        Instance = this;
+        // Recuerdos ya recogidos en esta partida (antes de perder)
+        foreach (var m in ProgresoPartida.Recuerdos)
+            if (m != null && items.Count < maxSlots && !items.Contains(m)) items.Add(m);
+    }
 
     public bool Add(MemoryData memory)
     {
         if (memory == null || items.Count >= maxSlots || Has(memory)) return false;
         items.Add(memory);
+        ProgresoPartida.AgregarRecuerdo(memory);
         Changed?.Invoke();
         return true;
     }

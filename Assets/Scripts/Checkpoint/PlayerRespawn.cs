@@ -36,6 +36,17 @@ public class PlayerRespawn : MonoBehaviour
             checkpointPosition = transform.position;
             checkpointRotation = transform.rotation;
         }
+
+        // Si venimos de "Reintentar", aparecer en el último checkpoint
+        if (ProgresoPartida.HayCheckpoint)
+        {
+            checkpointPosition = ProgresoPartida.PosicionCheckpoint;
+            checkpointRotation = ProgresoPartida.RotacionCheckpoint;
+            if (controller) controller.enabled = false;
+            transform.SetPositionAndRotation(checkpointPosition, checkpointRotation);
+            if (controller) controller.enabled = true;
+            Physics.SyncTransforms();
+        }
     }
 
     /// <summary>Guarda un nuevo checkpoint (lo llama el script Checkpoint).</summary>
