@@ -23,6 +23,7 @@ public class MenuInicio : MonoBehaviour
     /// <summary>Botón JUGAR.</summary>
     public void PlayGame()
     {
+        ProgresoPartida.Reiniciar(); // partida nueva
         SceneManager.LoadScene(gameSceneName);
     }
 

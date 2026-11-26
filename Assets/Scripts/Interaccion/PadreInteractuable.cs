@@ -36,6 +36,7 @@ public class PadreInteractuable : Interactable
         if (terminado) return;
 
         terminado = true;
+        ProgresoPartida.Reiniciar(); // ganó: la próxima partida empieza de cero
         Movimiento.puedeMoverse = false;   // Antonio se queda quieto
         if (AudioJuego.Sonidos) AudioJuego.Efecto(AudioJuego.Sonidos.recuerdoCompleto);
         StartCoroutine(Ganar());

@@ -23,6 +23,11 @@ public class AntorchaInteractuable : Interactable
     [Header("Minijuego")]
     public UnityEvent alEncender = new UnityEvent();
 
+    [Header("Bloqueo (lo usa el puzle de antorchas)")]
+    [Tooltip("Si está bloqueada no se puede encender todavía.")]
+    public bool bloqueada = false;
+    public string mensajeBloqueada = "No prende... quizá falte encender otras antorchas.";
+
     static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
 
     MaterialPropertyBlock propiedadesCuerpo;
@@ -57,17 +62,42 @@ public class AntorchaInteractuable : Interactable
         propiedadesCuerpo = new MaterialPropertyBlock();
         propiedadesLlama = new MaterialPropertyBlock();
         Apagar();
+
+        // Si ya se había encendido en esta partida (antes de perder), queda encendida
+        if (ProgresoPartida.AntorchaEncendida(this)) EncenderYa();
+    }
+
+    /// <summary>Enciende la antorcha al instante, sin animación ni sonido de encendido.</summary>
+    public void EncenderYa()
+    {
+        if (llama == null) return;
+        encendiendo = false;
+        encendida = true;
+        tiempoEncendido = duracionEncendido;
+        llama.localScale = escalaOriginal;
+        llama.gameObject.SetActive(true);
+        luzFuego.enabled = true;
+        luzFuego.intensity = intensidadLuz;
+        AplicarEmision(1f);
+        if (AudioJuego.Sonidos && !sonidoFuego)
+            sonidoFuego = AudioJuego.BucleEn(gameObject, AudioJuego.Sonidos.antorchaEncendida, 0.8f, 10f);
     }
 
     public override string GetPrompt()
     {
         if (encendida) return "Antorcha encendida";
         if (encendiendo) return "Encendiendo antorcha...";
+        if (bloqueada) return "Antorcha (aún no prende)";
         return "Encender antorcha";
     }
 
     public override void Interact()
     {
+        if (bloqueada && !encendida)
+        {
+            InteractionSystem.ShowMessage(mensajeBloqueada);
+            return;
+        }
         Encender();
     }
 
@@ -137,6 +167,7 @@ public class AntorchaInteractuable : Interactable
         {
             encendiendo = false;
             encendida = true;
+            ProgresoPartida.MarcarAntorcha(this);
 
             // Crepitar de la antorcha encendida
             if (sonidoFuego) sonidoFuego.Play();
