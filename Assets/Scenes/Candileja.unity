@@ -3657,6 +3657,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint
   respawnPoint: {fileID: 285816266}
+  alturaZona: 6.28
+  mensaje: Punto de control guardado
 --- !u!65 &285816263
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3744,8 +3746,8 @@ Transform:
   m_GameObject: {fileID: 285816261}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.2, y: 0, z: -8.6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 98.34, y: -0.02, z: 83.68}
+  m_LocalScale: {x: 6.6513906, y: 0.021233, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -4509,6 +4511,9 @@ MonoBehaviour:
   pickupTrigger: PickUp
   promptText: {fileID: 1283595526}
   messageText: {fileID: 0}
+  hudPropio: 1
+  tamanoPrompt: 34
+  tamanoMensaje: 30
   debugLog: 0
 --- !u!114 &342234194
 MonoBehaviour:
@@ -5735,6 +5740,10 @@ MonoBehaviour:
   ejeBisagra: {x: 0, y: 1, z: 0}
   anguloApertura: -95
   duracion: 0.65
+  requiereTodosLosRecuerdos: 0
+  mensajeBloqueada: "Est\xE1 cerrada con llave... Siento que me faltan recuerdos
+    ({0}/{1})."
+  mensajeDesbloqueada: Con todos los recuerdos, la puerta por fin cede...
 --- !u!65 &401874217
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10507,24 +10516,36 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.598
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.598
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.598
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.17
+      value: 82.87
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.79
+      value: 0.99
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.14
+      value: 116.44
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.95309913
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.30265814
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalRotation.y
@@ -10536,7 +10557,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 35.235
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -10640,6 +10661,8 @@ MonoBehaviour:
   alEncender:
     m_PersistentCalls:
       m_Calls: []
+  bloqueada: 0
+  mensajeBloqueada: "No prende... quiz\xE1 falte encender otras antorchas."
 --- !u!1001 &790518468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12976,6 +12999,10 @@ MonoBehaviour:
   ejeBisagra: {x: 0, y: 1, z: 0}
   anguloApertura: -95
   duracion: 0.65
+  requiereTodosLosRecuerdos: 1
+  mensajeBloqueada: "Est\xE1 cerrada con llave... Siento que me faltan recuerdos
+    ({0}/{1})."
+  mensajeDesbloqueada: Con todos los recuerdos, la puerta por fin cede...
 --- !u!65 &918967833
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13729,7 +13756,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 77a6d87826b006f429e93785cb6613f6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 99.56
+      value: 98.7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 77a6d87826b006f429e93785cb6613f6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -13737,7 +13764,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 77a6d87826b006f429e93785cb6613f6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.62
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 77a6d87826b006f429e93785cb6613f6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -19597,24 +19624,36 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.598
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.598
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.598
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.17
+      value: 97.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.79
+      value: 1.14
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.97098
+      value: 184.98
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.94497985
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalRotation.y
@@ -19622,7 +19661,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0.32712865
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -19634,7 +19673,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 38.189
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_Name
@@ -19730,6 +19769,8 @@ MonoBehaviour:
   alEncender:
     m_PersistentCalls:
       m_Calls: []
+  bloqueada: 0
+  mensajeBloqueada: "No prende... quiz\xE1 falte encender otras antorchas."
 --- !u!1001 &1441744094
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21717,6 +21758,9 @@ MonoBehaviour:
   pickupTrigger: PickUp
   promptText: {fileID: 1283595526}
   messageText: {fileID: 0}
+  hudPropio: 1
+  tamanoPrompt: 34
+  tamanoMensaje: 30
   debugLog: 0
 --- !u!114 &1527859186
 MonoBehaviour:
@@ -21730,7 +21774,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca937d21c9054db4fa79e143a0f54939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Movimiento
-  speed: 3
+  speed: 4
   velocidadGiro: 540
   bloquearConParedes: 1
   capasBloqueo:
@@ -25003,6 +25047,9 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2932970903321006190, guid: 879da7b53fc58244590559a97c421cee, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1900000301}
+    - targetCorrespondingSourceObject: {fileID: 2932970903321006190, guid: 879da7b53fc58244590559a97c421cee, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1811057740}
     - targetCorrespondingSourceObject: {fileID: 2932970903321006190, guid: 879da7b53fc58244590559a97c421cee, type: 3}
       insertIndex: -1
@@ -26399,6 +26446,30 @@ MonoBehaviour:
   escenaVictoria: Win
   espera: 1.2
   margenInteraccion: 0.5
+--- !u!114 &1900000301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811057737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3222e3cbf1b44ee9ae449ec91905542f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muro: {fileID: 1811057739}
+  antorchas:
+  - {fileID: 771688914}
+  - {fileID: 1439774181}
+  - {fileID: 1915204404}
+  antorchaFinal: {fileID: 1439774181}
+  mensajeProgreso: 'Antorchas encendidas: {0}/{1}'
+  mensajeCompleto: "\xA1El muro se est\xE1 abriendo!"
+  mensajeFinalLista: Ahora la antorcha junto al muro de salida puede encenderse...
+  alCompletar:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1908064028
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26660,24 +26731,36 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.598
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.598
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.598
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.17
+      value: 149.85
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.79
+      value: 0.86
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.29
+      value: 152.14
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.93444645
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0.3561037
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalRotation.y
@@ -26689,7 +26772,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -41.722
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01943ba0ae10e554081767b7175657f9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -26793,6 +26876,8 @@ MonoBehaviour:
   alEncender:
     m_PersistentCalls:
       m_Calls: []
+  bloqueada: 0
+  mensajeBloqueada: "No prende... quiz\xE1 falte encender otras antorchas."
 --- !u!1 &1915390628 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1896122753671170479, guid: 7ad35a5fadec73241ba5e24b00ac78f9, type: 3}

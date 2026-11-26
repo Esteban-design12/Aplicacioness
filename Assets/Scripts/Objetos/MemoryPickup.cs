@@ -9,6 +9,12 @@ public class MemoryPickup : Interactable
 
     void Reset() => prompt = "Recoger recuerdo";
 
+    void Start()
+    {
+        // Si ya se recogió en esta partida (antes de perder), no vuelve a aparecer
+        if (ProgresoPartida.TieneRecuerdo(memory)) gameObject.SetActive(false);
+    }
+
     public override string GetPrompt() => memory ? $"Recoger: {memory.displayName}" : prompt;
 
     public override void Interact()
