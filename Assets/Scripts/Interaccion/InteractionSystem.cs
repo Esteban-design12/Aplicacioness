@@ -158,7 +158,7 @@ public class InteractionSystem : MonoBehaviour
         var scaler = go.AddComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         scaler.referenceResolution = new Vector2(1920f, 1080f);
-        scaler.matchWidthOrHeight = 0.5f;
+        scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand; // igual que los demás Canvas
 
         if (promptText)
             promptText.rectTransform.SetParent(go.transform, false);
