@@ -37,10 +37,31 @@ public class InteractionSystem : MonoBehaviour
     public float tamanoPrompt = 34f;
     public float tamanoMensaje = 30f;
 
+    [System.Serializable]
+    public class TextoConImagen
+    {
+        [Tooltip("Si el texto EMPIEZA con esto (sin el [E]), se muestra la imagen en su lugar.")]
+        public string empiezaCon;
+        public Sprite imagen;
+    }
+
+    [Header("Textos diseñados (imágenes)")]
+    [Tooltip("Imágenes con la tipografía del juego que reemplazan a ciertos textos.")]
+    public TextoConImagen[] imagenesDeTexto;
+    [Tooltip("Alto en pantalla de las imágenes del texto [E] (referencia 1080p).")]
+    public float altoImagenPrompt = 70f;
+    [Tooltip("Alto en pantalla de las imágenes de mensajes.")]
+    public float altoImagenMensaje = 90f;
+
+    Image promptImagen, mensajeImagen;
+
     [Header("Depuración")]
     public bool debugLog = false;
 
     Interactable current;
+
+    /// <summary>Objeto con el que se puede interactuar ahora mismo (o null).</summary>
+    public Interactable Actual => current;
     Coroutine messageRoutine;
     string lastName = "";
     Animator animator;
@@ -117,8 +138,10 @@ public class InteractionSystem : MonoBehaviour
         {
             // Sin texto en pausa o con el inventario/menú abierto (cursor libre)
             bool jugando = Time.timeScale > 0f && Cursor.lockState == CursorLockMode.Locked;
-            string texto = current != null ? current.GetPrompt() : "";
-            promptText.text = jugando && !string.IsNullOrEmpty(texto) ? $"[{interactKey}] {texto}" : "";
+            string texto = current != null && jugando ? current.GetPrompt() : "";
+            Sprite img = BuscarImagen(texto);
+            Poner(promptImagen, img, altoImagenPrompt);
+            promptText.text = img == null && !string.IsNullOrEmpty(texto) ? $"[{interactKey}] {texto}" : "";
         }
     }
 
@@ -156,6 +179,24 @@ public class InteractionSystem : MonoBehaviour
         messageText.fontStyle = FontStyles.Italic;
         messageText.gameObject.SetActive(true);
         messageText.enabled = true;
+
+        // Imágenes para los textos diseñados (mismo lugar que cada texto)
+        promptImagen = CrearImagen(go.transform, "PromptImagen", 150f);
+        mensajeImagen = CrearImagen(go.transform, "MensajeImagen", 250f);
+    }
+
+    static Image CrearImagen(Transform padre, string nombre, float altura)
+    {
+        var img = new GameObject(nombre, typeof(RectTransform)).AddComponent<Image>();
+        var r = img.rectTransform;
+        r.SetParent(padre, false);
+        r.anchorMin = r.anchorMax = new Vector2(0.5f, 0f);
+        r.pivot = new Vector2(0.5f, 0.5f);
+        r.anchoredPosition = new Vector2(0f, altura);
+        img.preserveAspect = true;
+        img.raycastTarget = false;
+        img.enabled = false;
+        return img;
     }
 
     static void Configurar(TMP_Text t, float altura, float tamano)
@@ -195,9 +236,35 @@ public class InteractionSystem : MonoBehaviour
 
     IEnumerator MessageCoroutine(string text, float seconds)
     {
-        messageText.text = "";
-        messageText.text = text;
+        Sprite img = BuscarImagen(text);
+        Poner(mensajeImagen, img, altoImagenMensaje);
+        messageText.text = img == null ? text : "";
         yield return new WaitForSeconds(seconds);
         messageText.text = "";
+        Poner(mensajeImagen, null, 0f);
+    }
+
+    /// <summary>Imagen diseñada para este texto (o null si no hay).</summary>
+    Sprite BuscarImagen(string texto)
+    {
+        if (string.IsNullOrEmpty(texto) || imagenesDeTexto == null) return null;
+        foreach (var t in imagenesDeTexto)
+            if (t != null && t.imagen && !string.IsNullOrEmpty(t.empiezaCon) &&
+                texto.StartsWith(t.empiezaCon, System.StringComparison.OrdinalIgnoreCase))
+                return t.imagen;
+        return null;
+    }
+
+    static void Poner(Image destino, Sprite img, float alto)
+    {
+        if (!destino) return;
+        if (!img) { if (destino.enabled) destino.enabled = false; return; }
+        if (destino.sprite != img)
+        {
+            destino.sprite = img;
+            float aspecto = img.rect.height > 0f ? img.rect.width / img.rect.height : 1f;
+            destino.rectTransform.sizeDelta = new Vector2(alto * aspecto, alto);
+        }
+        destino.enabled = true;
     }
 }

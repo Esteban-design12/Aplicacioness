@@ -15,7 +15,7 @@ public static class IniciarMenu
     static readonly string[] orden =
     {
         "MenuPrincipal", "Previo", "Tutorial", "Candileja",
-        "Opciones", "Creditos", "Lose", "Win"
+        "Final", "Opciones", "Creditos", "Lose", "Win"
     };
 
     static IniciarMenu()

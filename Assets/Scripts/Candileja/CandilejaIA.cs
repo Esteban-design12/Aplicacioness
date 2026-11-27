@@ -101,6 +101,19 @@ public class CandilejaIA : MonoBehaviour
     Estado estado = Estado.Patrulla;
 
     static CandilejaIA cazando; // solo una Candileja caza a la vez
+    static readonly System.Collections.Generic.HashSet<CandilejaIA> detectando =
+        new System.Collections.Generic.HashSet<CandilejaIA>();
+
+    /// <summary>true si alguna Candileja tiene detectado a Antonio (lo persigue o lo asusta).</summary>
+    public static bool JugadorDetectado
+    {
+        get
+        {
+            foreach (var c in detectando)
+                if (c && c.isActiveAndEnabled) return true;
+            return false;
+        }
+    }
 
     MapaLaberinto mapa;
     Animator animator;
@@ -150,6 +163,7 @@ public class CandilejaIA : MonoBehaviour
     {
         if (estado == Estado.Susto && !perderAlAsustar) Movimiento.puedeMoverse = true;
         if (cazando == this) cazando = null;
+        detectando.Remove(this);
         AudioJuego.Persecucion(false);
     }
 
@@ -158,6 +172,8 @@ public class CandilejaIA : MonoBehaviour
     {
         if (!jugador) return;
         estadoActual = estado.ToString();
+        if (estado == Estado.Persecucion || estado == Estado.Susto) detectando.Add(this);
+        else detectando.Remove(this);
 
         if (estado == Estado.Susto)
         {
