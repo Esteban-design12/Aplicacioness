@@ -3,15 +3,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// El papá de Antonio, afuera del laberinto. Al acercarse y pulsar E, Antonio gana
-/// y se carga la escena de victoria.
+/// El papá de Antonio, afuera del laberinto. Al acercarse y pulsar E, Antonio gana:
+/// se carga la escena Final y desde ahí se pasa a la de victoria (Win).
 /// Va en el objeto del papá. Si no tiene collider, se le crea uno automáticamente.
 /// </summary>
 [AddComponentMenu("Juego/Padre interactuable")]
 public class PadreInteractuable : Interactable
 {
     [Header("Victoria")]
-    public string escenaVictoria = "Win";
+    [Tooltip("Escena que se carga al hablar con el papá (la escena Final, que luego lleva a Win).")]
+    public string escenaVictoria = "Final";
     [Tooltip("Segundos de espera antes de cargar la escena (para que suene el efecto).")]
     public float espera = 1.2f;
 

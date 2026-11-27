@@ -1743,7 +1743,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 1
-  m_Spacing: 0
+  m_Spacing: -600
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -5529,6 +5529,25 @@ MonoBehaviour:
   tamanoPrompt: 34
   tamanoMensaje: 30
   debugLog: 0
+  imagenesDeTexto:
+  - empiezaCon: Abrir puerta
+    imagen: {fileID: 21300000, guid: 770fc18e503ba8c45bacd790afbd39f2, type: 3}
+  - empiezaCon: Cerrar puerta
+    imagen: {fileID: 21300000, guid: ea3d9ee3748787844822628e808aef1c, type: 3}
+  - empiezaCon: Puerta cerrada con llave
+    imagen: {fileID: 21300000, guid: d4c98f20acafd054c80dc4f9b8bed60d, type: 3}
+  - empiezaCon: Encender antorcha
+    imagen: {fileID: 21300000, guid: 5900d000e8b562b4290457142bf9320e, type: 3}
+  - empiezaCon: Antorcha encendida
+    imagen: {fileID: 21300000, guid: 2033a4594559cf94dba1fe1476fb937c, type: 3}
+  - empiezaCon: Punto de control
+    imagen: {fileID: 21300000, guid: ff41bed157b90b9498c49052dfe53347, type: 3}
+  - empiezaCon: Recuerdo obtenido
+    imagen: {fileID: 21300000, guid: 75e2b650d7e5d4c4dbe8643292d79b55, type: 3}
+  - empiezaCon: Está cerrada con llave
+    imagen: {fileID: 21300000, guid: 9c78eb2a44cc52a4180ab4fef171e78b, type: 3}
+  altoImagenPrompt: 70
+  altoImagenMensaje: 90
 --- !u!114 &342234194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9210,6 +9229,7 @@ GameObject:
   - component: {fileID: 561107282}
   - component: {fileID: 561107281}
   - component: {fileID: 561107280}
+  - component: {fileID: 1900000401}
   m_Layer: 5
   m_Name: Canvas_HUD
   m_TagString: Untagged
@@ -25759,6 +25779,25 @@ MonoBehaviour:
   tamanoPrompt: 34
   tamanoMensaje: 30
   debugLog: 0
+  imagenesDeTexto:
+  - empiezaCon: Abrir puerta
+    imagen: {fileID: 21300000, guid: 770fc18e503ba8c45bacd790afbd39f2, type: 3}
+  - empiezaCon: Cerrar puerta
+    imagen: {fileID: 21300000, guid: ea3d9ee3748787844822628e808aef1c, type: 3}
+  - empiezaCon: Puerta cerrada con llave
+    imagen: {fileID: 21300000, guid: d4c98f20acafd054c80dc4f9b8bed60d, type: 3}
+  - empiezaCon: Encender antorcha
+    imagen: {fileID: 21300000, guid: 5900d000e8b562b4290457142bf9320e, type: 3}
+  - empiezaCon: Antorcha encendida
+    imagen: {fileID: 21300000, guid: 2033a4594559cf94dba1fe1476fb937c, type: 3}
+  - empiezaCon: Punto de control
+    imagen: {fileID: 21300000, guid: ff41bed157b90b9498c49052dfe53347, type: 3}
+  - empiezaCon: Recuerdo obtenido
+    imagen: {fileID: 21300000, guid: 75e2b650d7e5d4c4dbe8643292d79b55, type: 3}
+  - empiezaCon: Está cerrada con llave
+    imagen: {fileID: 21300000, guid: 9c78eb2a44cc52a4180ab4fef171e78b, type: 3}
+  altoImagenPrompt: 70
+  altoImagenMensaje: 90
 --- !u!114 &1527859186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31579,7 +31618,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prompt: "Hablar con pap\xE1"
   animacionAgacharse: 0
-  escenaVictoria: Win
+  escenaVictoria: Final
   espera: 1.2
   margenInteraccion: 0.5
 --- !u!114 &1900000301
@@ -34922,6 +34961,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1937935668210683511, guid: 668c52dc214e5b24f96ffb2af0cd79b0, type: 3}
   m_PrefabInstance: {fileID: 413934087}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1900000401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561107279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 270007d1e4954e5ca88bbb3f6aeb612a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grupoPeligro: {fileID: 0}
+  grupoPista: {fileID: 0}
+  velocidadPeligro: 8
+  velocidadPista: 4
+  pulso: 0.08
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

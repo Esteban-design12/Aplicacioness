@@ -121,6 +121,7 @@ public class AudioJuego : MonoBehaviour
 
             case "Lose":
             case "Win":
+            case "Final":
                 DetenerAmbiente();
                 // Dejar que termine el sonido de captura antes de la música
                 Musica(Sonidos.musicaFinal, escena.name == "Lose" ? 2.5f : 0f);
